@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { UserResponseType } from 'src/types/userResponse.type';
 import { LoginDto } from './dto/Login.dto';
 import { compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -43,31 +44,42 @@ export class UsersService {
     return user;
   }
 
-  buildUserResponse(User: User): UserResponseType {
+  buildUserResponse(user: User): UserResponseType {
     return {
-      firstName: User.firstName,
-      lastName: User.lastName,
-      email: User.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: this.generateJwt(user),
     };
   }
 
-  // getUsers() {
-  //   return this.userModel.find();
-  // }
+  generateJwt(user: User): string {
+    return sign({ email: user.email }, process.env.JWT_TOKEN, {
+      expiresIn: '1h',
+    });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email });
+  }
+
+  getUsers() {
+    return this.userModel.find();
+  }
+
+  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    return await this.userModel.findByIdAndUpdate(
+      id,
+      { $set: updateUserDto },
+      { new: true, useFindAndModify: false },
+    );
+  }
+
+  deleteUser(id: string) {
+    return this.userModel.findByIdAndDelete(id);
+  }
 
   // getUserById(id: string) {
   //   return this.userModel.findById(id);
-  // }
-
-  // async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-  //   return await this.userModel.findByIdAndUpdate(
-  //     id,
-  //     { $set: updateUserDto },
-  //     { new: true, useFindAndModify: false },
-  //   );
-  // }
-
-  // deleteUser(id: string) {
-  //   return this.userModel.findByIdAndDelete(id);
   // }
 }
