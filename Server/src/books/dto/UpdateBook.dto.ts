@@ -1,15 +1,15 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateBookDto {
+export class UpdateBookDto {
   @IsNotEmpty()
   @IsString()
-  title: string;
+  title?: string;
 
   @IsNotEmpty()
   @IsString()
-  author: string;
+  author?: string;
 
   @IsNotEmpty()
   @IsString()
-  coverPictureUrl: string;
+  coverPictureUrl?: string;
 }
