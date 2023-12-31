@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { hash } from 'bcrypt';
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true })
   firstName: string;
@@ -9,7 +9,7 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true, unique: true, validate: /\S+@\S+\.\S+/ })
   email: string;
 
   @Prop({ required: true, select: false })
