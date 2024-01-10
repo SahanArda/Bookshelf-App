@@ -8,13 +8,7 @@ Welcome to Project Share, a full-stack application designed for book enthusiasts
     - bcrypt hashes passwords to protect sensitive user data. 
     - helmet is middleware that adds various HTTP headers to secure your Express application by protecting against common web vulnerabilities.
     - jsonwebtoken is a library for generating and verifying JSON Web Tokens (JWTs).
-    - multer used for uploading files.
-    - formik simplifies the process of building and validating forms in React applications.
-    - react-dropzone provides a dropzone area where users can drag and drop files or click to upload files.
-    - react-redux enables the integration of Redux with React components, allowing them to subscribe to the Redux store and dispatch actions.
-    - redux-persist allows you to save the state of your Redux store to a storage engine (like localStorage or AsyncStorage) and then rehydrate the state when the application is reloaded.
-    - yup used with form libraries like formik to define and validate the shape of data. yup allows you to create validation schemas declaratively and provides methods for validating data against these schemas.
-    - MUI for icons and components.
+    - Bootstrap for components.
 
 ## Project Structure
 The project has these key components
