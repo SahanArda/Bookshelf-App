@@ -20,7 +20,7 @@ const Login = () => {
       try {
         const response = await axios.post("http://localhost:3001/users/login", values);
         const { token } = response.data;
-        console.log("Login successful! Token:", token);
+        localStorage.setItem('token', token);
         navigate('/home')
       } catch (error) {
         console.error("Login failed:", error.message);

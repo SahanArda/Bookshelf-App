@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/CreateUser.dto';
@@ -16,9 +17,10 @@ import mongoose from 'mongoose';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { UserResponseType } from 'src/types/userResponse.type';
 import { LoginDto } from './dto/Login.dto';
-import { ExpressRequest } from 'src/auth/auth.middleware';
+import { AuthMiddleware, ExpressRequest } from 'src/auth/auth.middleware';
 
 @Controller('users')
+@UseGuards(AuthMiddleware)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 

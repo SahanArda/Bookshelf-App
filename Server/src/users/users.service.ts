@@ -55,7 +55,7 @@ export class UsersService {
 
   generateJwt(user: User): string {
     return sign({ email: user.email }, process.env.JWT_TOKEN, {
-      expiresIn: '3h',
+      expiresIn: '1h',
     });
   }
 
