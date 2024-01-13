@@ -83,20 +83,9 @@ const Login = () => {
                 Sign in
               </button>
             </div>
-            {/* <div className="col-md-6">
-              <button
-                type="submit"
-                className={`btn btn-primary ${styles.btn}`}
-                onClick={() => {
-                  navigate("/register");
-                }}
-              >
-                Register
-              </button>
-            </div> */}
             <div className="col-12">
               <p className={styles.small_text}>
-                Don't have an account? Create one {" "}
+                Don&apos;t have an account? Create one {" "}
                 <span
                   className={styles.link}
                   onClick={() => {

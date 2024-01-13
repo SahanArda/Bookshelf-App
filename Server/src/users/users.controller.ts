@@ -24,7 +24,7 @@ import { AuthMiddleware, ExpressRequest } from 'src/auth/auth.middleware';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Post()
+  @Post('/register')
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<UserResponseType> {
