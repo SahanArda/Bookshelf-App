@@ -34,7 +34,7 @@ The project has these key components
   2. Start Server
   
    ```sh
-   npm run start
+   npm run start:dev
    ```
 ### Frontend
   - Navigate to __`Client`__
