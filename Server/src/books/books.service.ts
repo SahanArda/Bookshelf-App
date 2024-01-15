@@ -1,7 +1,6 @@
-// src/books/books.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Book } from '../schemas/Book.schema';
 import { CreateBookDto } from './dto/CreateBook.dto';
 import { UpdateBookDto } from './dto/UpdateBook.dto';
@@ -10,7 +9,10 @@ import { UpdateBookDto } from './dto/UpdateBook.dto';
 export class BooksService {
   constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
-  async createBook(createBookDto: CreateBookDto, addedBy: any): Promise<Book> {
+  async createBook(
+    createBookDto: CreateBookDto,
+    addedBy: Types.ObjectId,
+  ): Promise<Book> {
     const newBook = new this.bookModel({
       ...createBookDto,
       addedBy,
@@ -18,8 +20,8 @@ export class BooksService {
     return newBook.save();
   }
 
-  async getBooks(): Promise<Book[]> {
-    return this.bookModel.find().exec();
+  async getBooks(addedBy: Types.ObjectId): Promise<Book[]> {
+    return this.bookModel.find({ addedBy }).exec();
   }
 
   async getBookById(id: string): Promise<Book> {

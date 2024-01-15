@@ -8,8 +8,4 @@ export class CreateBookDto {
   @IsNotEmpty()
   @IsString()
   author: string;
-
-  @IsNotEmpty()
-  @IsString()
-  coverPictureUrl: string;
 }

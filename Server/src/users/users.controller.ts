@@ -28,14 +28,12 @@ export class UsersController {
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<UserResponseType> {
-    // console.log(createUserDto);
     const user = await this.usersService.createUser(createUserDto);
     return this.usersService.buildUserResponse(user);
   }
 
   @Post('/login')
   async loginUser(@Body() loginDto: LoginDto): Promise<UserResponseType> {
-    // console.log(loginDto);
     const user = await this.usersService.loginUser(loginDto);
     return this.usersService.buildUserResponse(user);
   }

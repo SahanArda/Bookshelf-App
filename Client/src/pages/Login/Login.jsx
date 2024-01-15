@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoginNavbar from "../../components/LoginNavbar/LoginNavbar";
 import styles from "./Login.module.css";
 
 const loginSchema = Yup.object().shape({
@@ -37,6 +38,7 @@ const Login = () => {
 
   return (
     <>
+      <LoginNavbar />
       <Container className={styles.test}>
         <div className={styles.form_container}>
           <form className="row g-3" onSubmit={formik.handleSubmit}>
