@@ -1,9 +1,9 @@
-import React from "react";
 import { Container } from "react-bootstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoginNavbar from "../../components/LoginNavbar/LoginNavbar";
 import styles from "./Register.module.css";
 
 const registerSchema = Yup.object().shape({
@@ -40,10 +40,10 @@ const Register = () => {
 
   return (
     <>
+      <LoginNavbar />
       <Container className={styles.register_container}>
         <div className={styles.form_container}>
           <form className="row g-3" onSubmit={formik.handleSubmit}>
-            {/* firstName Field */}
             <div className="col-md-6">
               <input
                 className={`form-control ${
@@ -64,7 +64,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* lastName Field */}
             <div className="col-md-6">
               <input
                 className={`form-control ${
@@ -85,7 +84,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* email Field */}
             <div className="col-md-6">
               <input
                 className={`form-control ${
@@ -106,7 +104,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* password Field */}
             <div className="col-md-6">
               <input
                 className={`form-control ${
@@ -127,12 +124,8 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <div className="col-12">
-              <button
-                type="submit"
-                className={`btn btn-primary ${styles.btn}`}
-              >
+              <button type="submit" className={`btn btn-primary ${styles.btn}`}>
                 Register
               </button>
             </div>

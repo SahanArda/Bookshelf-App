@@ -28,13 +28,18 @@ export class BooksController {
       throw new UnauthorizedException('User not authenticated');
     }
 
-    const addedBy = req.user; // The user object itself
+    const addedBy = req.user._id; // The user object itself
     return this.booksService.createBook(createBookDto, addedBy);
   }
 
   @Get()
-  async getBooks(): Promise<Book[]> {
-    return this.booksService.getBooks();
+  async getBooks(@Request() req): Promise<Book[]> {
+    if (!req.user) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    const addedBy = req.user._id; // Extract user ID from the request
+    return this.booksService.getBooks(addedBy);
   }
 
   @Get(':id')
