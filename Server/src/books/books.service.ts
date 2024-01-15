@@ -1,4 +1,3 @@
-// src/books/books.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -21,8 +20,7 @@ export class BooksService {
     return newBook.save();
   }
 
-  async getBooks(addedBy: any): Promise<Book[]> {
-    // Modify the logic to filter books based on the user ID (addedBy)
+  async getBooks(addedBy: Types.ObjectId): Promise<Book[]> {
     return this.bookModel.find({ addedBy }).exec();
   }
 

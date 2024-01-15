@@ -1,10 +1,10 @@
-// AddBookForm.js
+// UpdateBookForm.js
 import { useState } from "react";
 import axios from "axios";
 import { Form, Button, Modal } from "react-bootstrap";
 
-const AddBookForm = ({ onBookAdded }) => {
-  const [newBook, setNewBook] = useState({
+const UpdateBookForm = ({ bookId, onBookUpdated }) => {
+  const [updatedBook, setUpdatedBook] = useState({
     title: "",
     author: "",
     coverPictureUrl: "",
@@ -13,27 +13,29 @@ const AddBookForm = ({ onBookAdded }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewBook((prevBook) => ({ ...prevBook, [name]: value }));
+    setUpdatedBook((prevBook) => ({
+      ...prevBook,
+      [name]: value,
+    }));
   };
 
-  const handleAddBook = async () => {
+  const handleUpdateBook = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:3001/books",
-        newBook,
+      const response = await axios.patch(
+        `http://localhost:3001/books/${bookId}`,
+        updatedBook,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      onBookAdded(response.data); // Notify parent about the new book
-      setNewBook({ title: "", author: "", coverPictureUrl: "" });
+      onBookUpdated(response.data); // Notify parent about the updated book
       handleCloseModal();
     } catch (error) {
       console.error(
-        "Error adding book:",
+        "Error updating book:",
         error.response?.data || error.message
       );
     }
@@ -45,7 +47,7 @@ const AddBookForm = ({ onBookAdded }) => {
   return (
     <>
       <Button variant="primary" onClick={handleShowModal}>
-        Add Book
+        Update Book Details
       </Button>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -58,7 +60,7 @@ const AddBookForm = ({ onBookAdded }) => {
               <Form.Control
                 type="text"
                 name="title"
-                value={newBook.title}
+                value={updatedBook.title}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -67,7 +69,7 @@ const AddBookForm = ({ onBookAdded }) => {
               <Form.Control
                 type="text"
                 name="author"
-                value={newBook.author}
+                value={updatedBook.author}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -76,7 +78,7 @@ const AddBookForm = ({ onBookAdded }) => {
               <Form.Control
                 type="text"
                 name="coverPictureUrl"
-                value={newBook.coverPictureUrl}
+                value={updatedBook.coverPictureUrl}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -86,8 +88,8 @@ const AddBookForm = ({ onBookAdded }) => {
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddBook}>
-            Add Book
+          <Button variant="primary" onClick={handleUpdateBook}>
+            Update Book
           </Button>
         </Modal.Footer>
       </Modal>
@@ -95,4 +97,4 @@ const AddBookForm = ({ onBookAdded }) => {
   );
 };
 
-export default AddBookForm;
+export default UpdateBookForm;

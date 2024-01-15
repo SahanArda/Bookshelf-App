@@ -1,147 +1,81 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import HomeNavbar from "../../components/HomeNavbar/HomeNavbar";
+import AddBook from "../../components/AddBook/AddBook";
+import DeleteBook from "../../components/DeleteBook/DeleteBook";
+import UpdateBook from "../../components/UpdateBook/UpdateBook";
+import styles from "./Hero.module.css";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
-  const [newBook, setNewBook] = useState({
-    title: "",
-    author: "",
-    coverPictureUrl: "",
-  });
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Fetch books when the component mounts
     fetchBooks();
   }, []);
 
   const fetchBooks = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3001/books', {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3001/books", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setBooks(response.data);
     } catch (error) {
-      console.error('Error fetching books:', error.message);
+      console.error("Error fetching books:", error.message);
     }
   };
-  
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewBook((prevBook) => ({ ...prevBook, [name]: value }));
+  const handleBookAdded = (newBook) => {
+    setBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
-  const handleAddBook = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('User not authenticated. Token not found.');
-        return;
-      }
-  
-      console.log('Adding book:', newBook); // Add this line for debugging
-  
-      const response = await axios.post(
-        'http://localhost:3001/books',
-        newBook,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-  
-      console.log('Add book response:', response.data); // Add this line for debugging
-  
-      // Fetch updated list of books after adding a new one
-      fetchBooks();
-      // Clear the form
-      setNewBook({ title: '', author: '', coverPictureUrl: '' });
-      // Close the modal
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error adding book:', error.response?.data || error.message);
-    }
+  const handleBookDeleted = (deletedBookId) => {
+    setBooks((prevBooks) =>
+      prevBooks.filter((book) => book._id !== deletedBookId)
+    );
   };
-  
 
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleBookUpdated = (updatedBook) => {
+    setBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book._id === updatedBook._id ? updatedBook : book
+      )
+    );
+  };
 
   return (
     <>
       <HomeNavbar />
       <Container>
+        <div className={styles.addbtn}>
+          <AddBook onBookAdded={handleBookAdded} />
+        </div>
         <Row>
-          <Col>
-            <Button variant="primary" onClick={handleShowModal}>
-              Add Book
-            </Button>
-
-            {/* Modal for adding books */}
-            <Modal show={showModal} onHide={handleCloseModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>Add Book</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Form>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="title"
-                      value={newBook.title}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Author</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="author"
-                      value={newBook.author}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Cover Picture URL</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="coverPictureUrl"
-                      value={newBook.coverPictureUrl}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Group>
-                </Form>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleAddBook}>
-                  Add Book
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </Col>
-        </Row>
-        <Row>
-          {/* Display the list of books */}
           {books.map((book) => (
             <Col key={book._id}>
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-              <img
-                src={book.coverPictureUrl}
-                alt={book.title}
-                style={{ maxWidth: "100px" }}
-              />
+              <Card style={{ width: "18rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={book.coverPictureUrl}
+                  alt={book.title}
+                  style={{ maxWidth: "100px" }}
+                />
+                <Card.Body>
+                  <Card.Title>{book.title}</Card.Title>
+                  <Card.Text>{book.author}</Card.Text>
+                  <DeleteBook
+                    bookId={book._id}
+                    onBookDeleted={handleBookDeleted}
+                  />
+                  <UpdateBook
+                    bookId={book._id}
+                    onBookUpdated={handleBookUpdated}
+                  />
+                </Card.Body>
+              </Card>
             </Col>
           ))}
         </Row>
