@@ -2,12 +2,12 @@
 import { useState } from "react";
 import axios from "axios";
 import { Form, Button, Modal } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const AddBookForm = ({ onBookAdded }) => {
+const AddBook = ({ onBookAdded }) => {
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
-    coverPictureUrl: "",
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +29,7 @@ const AddBookForm = ({ onBookAdded }) => {
         }
       );
       onBookAdded(response.data); // Notify parent about the new book
-      setNewBook({ title: "", author: "", coverPictureUrl: "" });
+      setNewBook({ title: "", author: ""});
       handleCloseModal();
     } catch (error) {
       console.error(
@@ -71,15 +71,6 @@ const AddBookForm = ({ onBookAdded }) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Cover Picture URL</Form.Label>
-              <Form.Control
-                type="text"
-                name="coverPictureUrl"
-                value={newBook.coverPictureUrl}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -95,4 +86,8 @@ const AddBookForm = ({ onBookAdded }) => {
   );
 };
 
-export default AddBookForm;
+AddBook.propTypes = {
+  onBookAdded: PropTypes.func.isRequired,
+};
+
+export default AddBook;

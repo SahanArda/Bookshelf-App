@@ -8,8 +8,4 @@ export class UpdateBookDto {
   @IsOptional()
   @IsString()
   author?: string;
-
-  @IsOptional()
-  @IsString()
-  coverPictureUrl?: string;
 }

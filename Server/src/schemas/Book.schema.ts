@@ -9,9 +9,6 @@ export class Book {
   @Prop({ required: true })
   author: string;
 
-  @Prop()
-  coverPictureUrl: string;
-
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   addedBy: Types.ObjectId;
 }

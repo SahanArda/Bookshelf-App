@@ -1,13 +1,12 @@
-// UpdateBookForm.js
 import { useState } from "react";
 import axios from "axios";
 import { Form, Button, Modal } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const UpdateBookForm = ({ bookId, onBookUpdated }) => {
+const UpdateBook = ({ bookId, onBookUpdated }) => {
   const [updatedBook, setUpdatedBook] = useState({
     title: "",
     author: "",
-    coverPictureUrl: "",
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -73,15 +72,6 @@ const UpdateBookForm = ({ bookId, onBookUpdated }) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Cover Picture URL</Form.Label>
-              <Form.Control
-                type="text"
-                name="coverPictureUrl"
-                value={updatedBook.coverPictureUrl}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -97,4 +87,9 @@ const UpdateBookForm = ({ bookId, onBookUpdated }) => {
   );
 };
 
-export default UpdateBookForm;
+UpdateBook.propTypes = {
+  bookId: PropTypes.func.isRequired, 
+  onBookUpdated: PropTypes.func.isRequired, 
+};
+
+export default UpdateBook;

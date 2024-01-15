@@ -1,8 +1,8 @@
-// DeleteBookButton.js
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const DeleteBookButton = ({ bookId, onBookDeleted }) => {
+const DeleteBook = ({ bookId, onBookDeleted }) => {
   const handleDeleteBook = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -27,4 +27,9 @@ const DeleteBookButton = ({ bookId, onBookDeleted }) => {
   );
 };
 
-export default DeleteBookButton;
+DeleteBook.propTypes = {
+  bookId: PropTypes.string.isRequired,
+  onBookDeleted: PropTypes.func.isRequired,
+}
+
+export default DeleteBook;

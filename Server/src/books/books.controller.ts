@@ -9,7 +9,6 @@ import {
   Request,
   UnauthorizedException,
 } from '@nestjs/common';
-// import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/CreateBook.dto';
 import { UpdateBookDto } from './dto/UpdateBook.dto';
@@ -47,7 +46,6 @@ export class BooksController {
     return this.booksService.getBookById(id);
   }
 
-  //   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async updateBook(
     @Param('id') id: string,
@@ -56,7 +54,6 @@ export class BooksController {
     return this.booksService.updateBook(id, updateBookDto);
   }
 
-  //   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteBook(@Param('id') id: string): Promise<void> {
     return this.booksService.deleteBook(id);

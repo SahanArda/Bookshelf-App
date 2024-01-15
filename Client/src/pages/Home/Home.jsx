@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import HomeNavbar from "../../components/HomeNavbar/HomeNavbar";
 import AddBook from "../../components/AddBook/AddBook";
 import DeleteBook from "../../components/DeleteBook/DeleteBook";
@@ -57,12 +57,6 @@ const Home = () => {
           {books.map((book) => (
             <Col key={book._id}>
               <Card style={{ width: "18rem" }}>
-                <Card.Img
-                  variant="top"
-                  src={book.coverPictureUrl}
-                  alt={book.title}
-                  style={{ maxWidth: "100px" }}
-                />
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
                   <Card.Text>{book.author}</Card.Text>
