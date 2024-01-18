@@ -8,6 +8,7 @@ Welcome to Project Share, a full-stack application designed for book enthusiasts
     - bcrypt hashes passwords to protect sensitive user data. 
     - helmet is middleware that adds various HTTP headers to secure your Express application by protecting against common web vulnerabilities.
     - jsonwebtoken is a library for generating and verifying JSON Web Tokens (JWTs).
+    - cors used to control and secure cross-origin HTTP requests, allowing or restricting access to resources based on specified policies
     - Bootstrap for components.
 
 ## Project Structure
@@ -17,9 +18,8 @@ The project has these key components
 
 ## Functionality
 - __Routes:__
-    - __`/auth`__: Contains all the information and operations related to auth
-    - __`/users`__: Contains all the information and operations related to the users
-    - __`/posts`__: Contains all the information and operations related to posts
+    - __`/books`__: Contains information about books and endpoint to retrieve books
+    - __`/users`__: Contains all the information and operations related to the users such as login and register
  
 ## How to Run Project
 ### Backend
@@ -63,7 +63,7 @@ You can create a `.env` file in the project root and define these variables ther
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/your-database
+MONGODB_URI="Link to your mongodb database"
 JWT_TOKEN=value
 ```
 
